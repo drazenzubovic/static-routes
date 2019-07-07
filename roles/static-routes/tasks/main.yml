@@ -1,0 +1,21 @@
+---
+
+###############################################################################
+#   S T A T I C   R O U T E S  -  M A I N
+###############################################################################
+
+- name: Invoking add-routes.yml
+  include_tasks: ./roles/static-routes/tasks/add-routes.yml
+  loop: "{{ ansible_interfaces }}"
+  loop_control:
+    loop_var: __interface_item
+  when: 
+    - vars['static_routes_' + __interface_item] is defined
+    - vars['static_routes_' + __interface_item] | length > 0
+  notify: RESTART_NETWORK
+
+
+- name: RESTART_NETWORK
+  service:
+    name: network
+    state: restarted

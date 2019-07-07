@@ -1,0 +1,13 @@
+# DISCLAIMER:  This file is fully managed by Ansible!
+# Any manual change here will be overwritten.
+
+{% for project in vars['static_routes_' + __interface_item] %}
+# Project: {{ project.name }}
+# Contact: {{ project.contact }}
+# Change: {{ project.date }}
+# Comment: {{ project.comment }}
+{% for route in project.routes %}
+{{ route }} via {{ __gateway_ip }}
+{% endfor %}
+
+{% endfor %}

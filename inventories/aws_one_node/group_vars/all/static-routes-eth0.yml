@@ -1,0 +1,19 @@
+---
+
+###############################################################################
+#  A W S    O N E    N O D E
+###############################################################################
+
+network_configuration_path: "/etc/sysconfig/network-scripts"
+
+static_routes_eth0:
+
+  - name: External routing
+    contact: contact@external.mail
+    date: 2019.07.03
+    comment: Example for eth0 nic
+    routes:
+      - 172.15.1.2
+      - 10.1.1.1
+      - 10.2.2.2
+ 

@@ -1,0 +1,6 @@
+[all]
+ip-172-201-1-10 ansible_ssh_host=ip-172-201-1-10.eu-central-1.compute.internal ansible_ssh_user=ansible
+
+[public-hosts]
+ip-172-201-1-10
+

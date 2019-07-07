@@ -1,0 +1,29 @@
+---
+
+###############################################################################
+#  A W S    O N E    N O D E
+###############################################################################
+
+network_configuration_path: "/etc/sysconfig/network-scripts"
+
+static_routes_eth1:
+
+  - name: Genesys project
+    contact: info@genesys.company.com
+    date: 2019.07.03
+    comment: Extra routes for Genesys
+    routes:
+      - 10.212.251.45
+      - 10.215.243.249
+      - 10.215.226.175
+ 
+  - name: Routing for example
+    contact: joe.doe@the.dot.com
+    date: 2019.07.03
+    comment: Example for eth1 nic
+    routes:
+      - 192.168.170.82
+      - 192.168.5.196
+      - 192.168.239.94
+      - 172.203.166.184
+      - 172.168.10.2

@@ -1,0 +1,36 @@
+---
+
+# Prerequisites:
+# 1) The full definition of interface is in the file /etc/sysconfig/network-scripts/ifcfg-<interface-name>
+# 2) The /etc/sysconfig/network-scripts/ifcfg-<interface-name> file contains entry: GATEWAY=<ip4-address>
+
+
+- name: Stat file ifcfg-{{ __interface_item }}
+  stat:
+    path: "{{ network_configuration_path }}/ifcfg-{{ __interface_item }}"
+  register: _result
+
+- name: Assert that interface configuration exists in {{ network_configuration_path }}
+  assert:
+    that: _result.stat.exists is defined and _result.stat.exists
+    fail_msg: File "{{ network_configuration_path }}/ifcfg-{{ __interface_item }}" does not exist
+
+- name: Register the config file {{ network_configuration_path }}/ifcfg-{{ __interface_item }}
+  command: 'cat "{{ network_configuration_path }}/ifcfg-{{ __interface_item }}"'
+  register: _result
+  changed_when: false
+
+- set_fact: 
+    _result_line: "{{ _result.stdout_lines | select('match', '^GATEWAY+') | list }}"
+  when: _result.stdout_lines is defined
+
+- name: Assert that config file {{ network_configuration_path }}/ifcfg-{{ __interface_item }} contains GATEWAY parameter
+  assert:
+    that: 
+      - _result_line | length > 0
+    fail_msg: File "{{ network_configuration_path }}/ifcfg-{{ __interface_item }}" does not contain GATEWAY parameter
+
+- set_fact: 
+    __gateway_ip: "{{ ( _result_line | first ).split('=') | last | replace('\"', '') }}"
+  when: _result_line is defined
+

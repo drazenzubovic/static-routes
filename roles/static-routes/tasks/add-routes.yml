@@ -1,0 +1,20 @@
+---
+
+###############################################################################
+#   A D D   R O U T E S 
+###############################################################################
+
+- name: Invoking get-gateway-ip.yml
+  include_tasks: ./roles/static-routes/tasks/get-gateway-ip.yml
+  when: 
+    - __interface_item is defined 
+    - ansible_interfaces | intersect(__interface_item)
+
+
+- name: Template to "{{ network_configuration_path }}/route-{{ __interface_item }}"
+  template:
+    src: ./roles/static-routes/templates/route.j2
+    dest: "{{ network_configuration_path }}/route-{{ __interface_item }}"
+    owner: root
+    group: root
+    mode: '0644'
