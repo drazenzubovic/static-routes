@@ -3,7 +3,10 @@
 ## Purpose
 
 Compute nodes sometimes need multiple NICs. Frequent management of routing tables over multiple nodes in a cluster might be a cumbersome process if not automated.
-This Ansible framework will help this task, and will keep the single source ot truth (for routing tables) in inventory.
+This simple Ansible role will help this task, and will keep the single source ot truth (for routing tables) in inventory.
+Every time the routing need to be extended, a set of meta-attributes can be configured and appended to the static routing table. These attributes are "name", "contact","date" and "comment", followed by tbe routing entries.
+
+This role does not have intention to generic network management.
 
 ## Prerequisites
 
@@ -31,7 +34,12 @@ GATEWAY=172.201.1.1
 
 Please note that GATEWAY parameter might not be configured OOTB, or by default.
 
-3  Ansible inventory contains definition for routing configuration `inventories/<inventory>/all/static-routes-<interface-name>`
+## Example
+
+### Inventory and hosts file
+
+Ansible inventory `inventories/<inventory>/all/static-routes-<interface-name>` contains definition of desired routing. There could be multiple entries on the list of `static_routes_eth0` names.
+
 
 ``` yaml
 network_configuration_path: "/etc/sysconfig/network-scripts"
@@ -46,11 +54,32 @@ static_routes_eth0:
       - 10.2.2.2
 ```
 
-## Usage
+Hosts file ...
+
+``` ini
+[all]
+ip-172-201-1-10 ansible_ssh_host=ip-172-201-1-10.eu-central-1.compute.internal ansible_ssh_user=ansible
+
+[public-hosts]
+ip-172-201-1-10
+```
+
+### Playbook
+
+``` yaml
+- hosts: public-hosts
+  become: yes
+  become_method: sudo
+  become_user: root
+  roles:
+    - static-routes
+```
 
 The Ansible playbook could be run as: `$ ansible-playbook static-routes.yml --ask-become-pass`
 
-This will create new routes int the `/etc/sysconfig/network-scripts/route-<interface-eth0` file as defined in the inventory:
+### Result
+
+Running the role will create new routes in the `/etc/sysconfig/network-scripts/route-<interface-eth0` file as defined in the inventory:
 
 ``` bash
 # Project: External routing

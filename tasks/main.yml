@@ -5,7 +5,7 @@
 ###############################################################################
 
 - name: Invoking add-routes.yml
-  include_tasks: ./roles/static-routes/tasks/add-routes.yml
+  include_tasks: tasks/add-routes.yml
   loop: "{{ ansible_interfaces }}"
   loop_control:
     loop_var: __interface_item

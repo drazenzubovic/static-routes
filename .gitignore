@@ -1,4 +1,1 @@
 ansible.cfg
-ansible-cache
-ansible-cache/*
-*retry
