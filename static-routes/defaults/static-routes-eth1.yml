@@ -8,10 +8,10 @@ network_configuration_path: "/etc/sysconfig/network-scripts"
 
 static_routes_eth1:
 
-  - name: Genesys project
-    contact: info@genesys.company.com
+  - name: Genesis project
+    contact: info@genesis.company.com
     date: 2019.07.03
-    comment: Extra routes for Genesys
+    comment: Extra routes for Genesis
     routes:
       - 10.212.251.45
       - 10.215.243.249
