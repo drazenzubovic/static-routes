@@ -4,6 +4,8 @@
 #   S T A T I C   R O U T E S  -  M A I N
 ###############################################################################
 
+- debug:
+    msg: "hello world"
 
 - name: Invoking add-routes.yml
   include_tasks: ./roles/static-routes/tasks/add-routes.yml

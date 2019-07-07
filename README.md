@@ -3,7 +3,10 @@
 ## Purpose
 
 Compute nodes sometimes need multiple NICs. Frequent management of routing tables over multiple nodes in a cluster might be a cumbersome process if not automated.
-This Ansible framework will help this task, and will keep the single source ot truth (for routing tables) in inventory.
+This simple Ansible role will help this task, and will keep the single source ot truth (for routing tables) in inventory.
+Every time the routing need to be extended, a set of meta-attributes can be configured and appended to the static routing table. These attributes are "name", "contact","date" and "comment", followed by tbe routing entries.
+
+This role does not have intention to generic network management.
 
 ## Prerequisites
 
