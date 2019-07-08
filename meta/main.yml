@@ -1,0 +1,4 @@
+galaxy_info:
+  role_name: static-routes
+  description: Manage network static routes
+  company: Audi
